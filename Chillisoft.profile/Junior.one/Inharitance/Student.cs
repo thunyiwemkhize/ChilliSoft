@@ -7,12 +7,12 @@
 
         public override void CalculateUsingDateOfBirth()
         {
-            Console.WriteLine($"This year are {DateTime.Now.Year - DateOfBirth.Year} years old");
+            Console.WriteLine($"This year are {DateTime.Now.Year - GenerateDateOfBirth(-25).Year} years old");
         }
 
         public override void Travels()
         {
-            Console.WriteLine("Student travels to School/Campus");
+            Console.WriteLine("Student travels to School");
         }
     }
 }

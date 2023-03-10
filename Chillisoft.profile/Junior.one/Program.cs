@@ -3,7 +3,7 @@
 using Junior.one.Inharitance;
 using Junior.one.Inharitence;
 
-Person[] personObj = { new Staff(), new Student() };
+Person[] personObj = { new Staff(), new Student()};
 foreach (var person in personObj)
 {
     person.CalculateUsingDateOfBirth();

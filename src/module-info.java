@@ -1,0 +1,10 @@
+/**
+ * 
+ */
+/**
+ * @author thuny
+ *
+ */
+module HeadFirstDesingPatterns {
+
+}

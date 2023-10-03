@@ -5,13 +5,18 @@ using CleanArchitecture.Domain;
 using Newtonsoft.Json;
 
 InMemoryUserGateway _usersGateWay = new InMemoryUserGateway();
+
 User addUser()
 {
     Console.WriteLine("Enter email address");
     var emailAddress = Console.ReadLine();
     var createUserUseCase = new CreateUserUseCase(_usersGateWay);
-    return createUserUseCase.Execute(emailAddress);
-
+    var request = new CreateUserRequest()
+    {
+        EmailAddress = emailAddress
+    };
+    return createUserUseCase.Execute(request);
+}
 
 while (true)
 {
@@ -31,7 +36,6 @@ while (true)
         break;
     }
 
-}
 }
 
 void prinUser()

@@ -4,7 +4,7 @@ namespace CleanArchitechure.InMemoryDB;
 
 public class InMemoryUserGateway : IUserGateway
 {
-    List<User> _users = new List<User>();
+   readonly List<User> _users = new();
 
     public void AddUser(User user)
     {

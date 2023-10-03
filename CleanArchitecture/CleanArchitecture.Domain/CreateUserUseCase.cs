@@ -7,12 +7,13 @@ public class CreateUserUseCase
     {
         _userGateway = userGateway;
     }
-    public User Execute(string emailAddress)
+  
+    public User Execute(CreateUserRequest request)
     {
         var newUser = new User
         {
             Id = Guid.NewGuid(),
-            Email = emailAddress
+            Email = request.EmailAddress
         };
         _userGateway.AddUser(newUser);
         return newUser;

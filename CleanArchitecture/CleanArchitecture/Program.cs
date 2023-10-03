@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 InMemoryUserGateway _usersGateWay = new InMemoryUserGateway();
 
-User addUser()
+void addUser()
 {
     Console.WriteLine("Enter email address");
     var emailAddress = Console.ReadLine();
@@ -15,7 +15,7 @@ User addUser()
     {
         EmailAddress = emailAddress
     };
-    return createUserUseCase.Execute(request);
+    createUserUseCase.Execute(request, new PrefixedConsolePresenter("Added "));
 }
 
 while (true)
@@ -24,12 +24,11 @@ while (true)
     var menuOption = Console.ReadLine();
     if (menuOption == "1")
     {
-       var newUser = addUser();
-       Console.WriteLine($"added {JsonConvert.SerializeObject(newUser)}");
+       addUser();
     }
     else if (menuOption == "2")
     {
-        prinUser();
+        printUser();
     }
     else
     {
@@ -38,10 +37,29 @@ while (true)
 
 }
 
-void prinUser()
+void printUser()
 {
     foreach (var user in _usersGateWay.FindAllUsers())
     {
         Console.WriteLine(JsonConvert.SerializeObject(user));
+    }
+}
+
+public class PrefixedConsolePresenter: IPresenter
+{
+    private string _prefix;
+    public PrefixedConsolePresenter(string prefix)
+    {
+        _prefix = prefix;
+    }
+
+    public void Error(string error)
+    {
+        Console.WriteLine($"added {error}");
+    }
+
+    public void Success(CreateUserResponse response)
+    {
+        Console.WriteLine($"added {JsonConvert.SerializeObject(response)}");
     }
 }

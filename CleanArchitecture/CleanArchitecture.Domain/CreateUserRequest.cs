@@ -9,5 +9,10 @@ namespace CleanArchitecture.Domain
     public class CreateUserRequest
     {
         public string EmailAddress { get; set; }
+
+        public CreateUserRequest()
+        {
+            EmailAddress = string.Empty;
+        }
     }
 }

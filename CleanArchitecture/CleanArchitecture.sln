@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitecture.Domain", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitechure.InMemoryDB", "CleanArchitechure.InMemoryDB\CleanArchitechure.InMemoryDB.csproj", "{E9D3704E-8371-48BB-A7F3-DA43FF86B1FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitechure.Web", "CleanArchitechure.Web\CleanArchitechure.Web.csproj", "{B185F9CF-DAF4-4947-A532-536E505B12F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitechure.Web", "CleanArchitechure.Web\CleanArchitechure.Web.csproj", "{B185F9CF-DAF4-4947-A532-536E505B12F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

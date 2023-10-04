@@ -1,4 +1,5 @@
 using CleanArchitechure.InMemoryDB;
+using CleanArchitechure.Web.Presenters;
 using CleanArchitecture.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<ICreateUserUseCase, CreateUserUseCase>();
 builder.Services.AddTransient<IUserGateway, InMemoryUserGateway>();
+builder.Services.AddTransient<IActionResultPresenter, RestPresenter>();
 
 
 var app = builder.Build();

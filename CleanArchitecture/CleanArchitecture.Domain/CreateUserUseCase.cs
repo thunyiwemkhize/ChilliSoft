@@ -19,7 +19,9 @@ public class CreateUserUseCase: ICreateUserUseCase
             var newUser = new User
             {
                 Id = Guid.NewGuid(),
-                Email = request.EmailAddress
+                Email = request.EmailAddress,
+                Name = request.Name,
+                Surname = request.Surname
             };
             _userGateway.AddUser(newUser);
             var response = new CreateUserResponse()

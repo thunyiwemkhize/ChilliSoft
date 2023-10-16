@@ -1,8 +1,7 @@
 ﻿using Junior.one.Generics;
-using NSubstitute;
 using NUnit.Framework;
-using System.Collections;
 using Moq;
+using NSubstitute;
 
 namespace Tests
 {
@@ -15,9 +14,27 @@ namespace Tests
             var employee = new Person
             {
                 Name = "Juan",
-                Age = 567
+                Age = 26
             };
          
+
+            var list = Substitute.For<ICollectAndDisplayPersonInformation>();
+            list.GetPerson(It.IsAny<int>()).Returns(employee);
+
+            var implentation = new Implementation(list);
+
+            implentation.getById(4);
+
+        }
+        [Test]
+        public void TestWithNSubstitute()
+        {
+            var employee = new Person
+            {
+                Name = "Juan",
+                Age = 567
+            };
+
 
             var list = new Mock<ICollectAndDisplayPersonInformation>();
             list.Setup(x => x.GetPerson(It.IsAny<int>())).Returns(employee);
@@ -29,46 +46,30 @@ namespace Tests
             Assert.That(employee, Is.EqualTo(res));
 
         }
-        [Test]
-        public void TestArrayList()
-        {
-            // arrange 
-            
-           // var collect = MakePeople(3);
-           // var mock = new Mock<ICollectAndDisplayPersonInformation>();
-           
-           // var implentation = new Implementation(mock.Object);
 
-           // // sut
-           // //var actual = mock.Setup(m => m.RequestPersonInformation(collect)).Returns(collect);
+        //private List<Person> MakePeople(int totalCount)
+        //{
+        //    var arrayList = new ArrayList();
+        //    for (int i = 0; i < totalCount; i++)
+        //    {
+        //        arrayList.Add(new Person
+        //        {
+        //            Name = "Juan",
+        //            Age = 26
+        //        });
+        //        arrayList.Add(new Person
+        //        {
+        //            Name = "Sara",
+        //            Age = 31
+        //        });
+        //        arrayList.Add(new Person
+        //        {
+        //            Name = "Carlos",
+        //            Age = 23
+        //        });
+        //    }
 
-           // // assert
-           //Assert.That(collect.Count, Is.);
-        }
-
-        private ArrayList MakePeople(int totalCount)
-        {
-            var arrayList = new ArrayList();
-            for (int i = 0; i < totalCount; i++)
-            {
-                arrayList.Add(new Person
-                {
-                    Name = "Juan",
-                    Age = 26
-                });
-                arrayList.Add(new Person
-                {
-                    Name = "Sara",
-                    Age = 31
-                });
-                arrayList.Add(new Person
-                {
-                    Name = "Carlos",
-                    Age = 23
-                });
-            }
-
-            return arrayList;
-        }
+        //    return arrayList;
+        //}
     }
 }

@@ -98,6 +98,29 @@ namespace Tests
                 Assert.Throws<ArgumentNullException>(() => repository.Create(emptyStaffNumber));
 
             }
+
+            [Test]
+            public void GetData_ReturnsListOfStudents()
+            {
+                // Arrange
+                var staffMock = Substitute.For<IGenenricRepository<Student>>();
+                var repository = new StudentRepository(staffMock);
+
+                var student1 = new Student { Id = Guid.NewGuid(), FullName = "Alice Smith", Course = "Math", StudentNumber = "12345" };
+                var student2 = new Student { Id = Guid.NewGuid(), FullName = "Bob Johnson", Course = "Science", StudentNumber = "67890" };
+
+                // Configure staffMock to return a list of students
+                staffMock.GetData().Returns(new List<Student> { student1, student2 });
+
+                // Act
+                var students = repository.GetData();
+
+                // Assert
+                staffMock.Received(1).GetData();
+                CollectionAssert.Contains(students, student1);
+                CollectionAssert.Contains(students, student2);
+                Assert.AreEqual(2, students.Count);
+            }
             public static Student ExpectedStudent(Student staff)
             {
                 return Arg.Is<Student>(

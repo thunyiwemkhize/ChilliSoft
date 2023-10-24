@@ -24,7 +24,7 @@ namespace Junior.one.Inharitance.Repository.StaffRepo
 
         public List<Staff> GetData()
         {
-            return _personList;
+            return _staffRepo.GetData();
         }
     }
 }

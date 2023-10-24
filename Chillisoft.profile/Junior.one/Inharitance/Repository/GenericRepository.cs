@@ -8,5 +8,9 @@
         {
             data.Add(entity);
         }
+        public List<T> GetData()
+        {
+            return data;
+        }
     }
 }

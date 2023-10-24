@@ -9,5 +9,6 @@ namespace Junior.one.Inharitance.Repository
     public interface IGenenricRepository<T>
     {
         void Create(T entity);
+        List<T> GetData();
     }
 }

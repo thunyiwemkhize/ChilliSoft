@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Junior.one.Inharitance.Repository.Staff;
 
-namespace Junior.one.Generics.Repository.Staff
+namespace Junior.one.Inharitance.Repository.StaffRepo
 {
-    public class StaffRepository: IStaffRepository
+    public class StaffRepository: IGenenricRepository<Staff>
     {
-        public List<Inharitance.Staff> _personList = new();
+        public List<Staff> _personList = new();
 
-        public void Create(Inharitance.Staff entity)
+        public void Create(Staff entity)
         {
             if (entity == null || string.IsNullOrEmpty(entity.FullName) || string.IsNullOrEmpty(entity.Position) || string.IsNullOrEmpty(entity.StaffNumber))
                 throw new ArgumentNullException();

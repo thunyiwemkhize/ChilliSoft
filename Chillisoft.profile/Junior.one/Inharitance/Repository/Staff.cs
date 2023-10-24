@@ -1,4 +1,4 @@
-﻿namespace Junior.one.Inharitance
+﻿namespace Junior.one.Inharitance.Repository
 {
     public class Staff : Person
     {

@@ -1,26 +1,19 @@
-﻿using Junior.one.Generics.Repository.Staff;
-using Junior.one.Inharitance;
-using Junior.one.Inharitance.Repository.Staff;
+﻿using Junior.one.Inharitance.Repository;
+using Junior.one.Inharitance.Repository.StaffRepo;
 using NSubstitute;
 using NUnit.Framework;
 
 namespace Tests
 {
     [TestFixture]
-    public class StaffRepositoryTest
+    public partial class StaffRepositoryTest
     {
         [Test]
         public void GivenStaff_ShouldCreateStaff()
         {
             // Arrange
-            var personRepository = Substitute.For<IStaffRepository>();
-            var employee = new Staff()
-            {
-                Id = Guid.Parse("6dd40b2f-2631-4ce2-91da-e4c5a5d2b378"),
-                FullName = "John Snow",
-                Position = "Lecture",
-                StaffNumber = "84764756"
-            };
+            var personRepository = Substitute.For<IGenenricRepository<Staff>>();
+            var employee = new StaffBuilder().WithValidStudent().Build();
 
             // Act
             personRepository.Create(employee);
@@ -41,31 +34,11 @@ namespace Tests
         {
             // Arrange
             var repository = new StaffRepository();
-            Staff nullStaff = null;
+            Staff? nullStaff = null;
 
-            var emptyName = new Staff()
-            {
-                Id = Guid.NewGuid(),
-                FullName = string.Empty,
-                Position = "HOD",
-                StaffNumber = "123456787",
-            };
-
-            var emptyPosition = new Staff()
-            {
-                Id = Guid.NewGuid(),
-                FullName = "Jessica Nkosi",
-                Position = string.Empty,
-                StaffNumber = "12345678",
-            };
-
-            var emptyStaffNumber = new Staff()
-            {
-                Id = Guid.NewGuid(),
-                FullName = "Thunyiwe Mkhize",
-                Position = "Juinor HOD",
-                StaffNumber = string.Empty,
-            };
+            var emptyName = new StaffBuilder().WithInvalidStaffFullName().Build();
+            var emptyPosition = new StaffBuilder().WithInvalidStaffPosition().Build();
+            var emptyStaffNumber = new StaffBuilder().WithInvalidStaffPosition().Build();
 
 
             Assert.Throws<ArgumentNullException>(() => repository.Create(nullStaff));

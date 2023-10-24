@@ -13,33 +13,28 @@ namespace Junior.one.Generics
         public int Age { get; set; }
     }
 
-    public class CollectAndDisplayPersonInformation: ICollectAndDisplayPersonInformation
+    public class Implementation
     {
+        private readonly ICollectAndDisplayPersonInformation _test;
 
-        public ArrayList RequestPersonInformation(ArrayList persoArrayList)
+        public Implementation(ICollectAndDisplayPersonInformation test)
         {
-            for (int i = 0; i < 3; i++)
-            {
-                Console.WriteLine("Add person name");
-                var personName = Console.ReadLine();
-                Console.WriteLine("Add person age");
-                var age = Console.ReadLine();
-            }
-
-            return persoArrayList;
+            _test = test;
         }
 
-        private readonly ArrayList PersonArrayList;
-
-        public CollectAndDisplayPersonInformation()
+        public ArrayList GetAll(ArrayList persoArrayList)
         {
-            PersonArrayList = new ArrayList();
+            return _test.RequestPersonInformation(persoArrayList);
         }
 
-    }
+        public Person getById(int age)
+        {
+           return _test.GetPerson(age);
+        }
 
-    public interface ICollectAndDisplayPersonInformation
-    {
-        ArrayList RequestPersonInformation(ArrayList persoArrayList);
+        
     }
+    
+
+   
 }

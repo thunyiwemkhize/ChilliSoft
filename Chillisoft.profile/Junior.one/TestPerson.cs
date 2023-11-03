@@ -1,4 +1,6 @@
-﻿using Junior.one.Inharitance.Repository;
+﻿using Junior.one.Inharitance;
+using Junior.one.Inharitance.Repository;
+using Junior.one.NullableGenerics;
 using System.Text.Json;
 
 namespace Junior.one
@@ -36,10 +38,8 @@ namespace Junior.one
             };
             repo.Create(staf);
             studentRepo.Create(student);
-
             Console.WriteLine(JsonSerializer.Serialize(repo.GetData()));
             Console.WriteLine(JsonSerializer.Serialize(studentRepo.GetData()));
-
         }
     }
 }

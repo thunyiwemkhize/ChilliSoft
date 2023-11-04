@@ -6,6 +6,10 @@
 
         public void Create(T genericEntity)
         {
+            if(genericEntity is null)
+            {
+                throw new ArgumentNullException();
+            }
             T[] newGenericListWithOneExtraSpace = new T[genericList.Length + 1];
 
             for (int i = 0; i < genericList.Length; i++)

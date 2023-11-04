@@ -33,6 +33,11 @@ namespace Tests
             staff.FullName = Guid.NewGuid().ToString();
             return this;
         }
+        public StaffBuilder WithEmptyStaff()
+        {
+            staff = new Staff();
+            return this;
+        }
 
         public StaffBuilder WithInvalidFullName()
         {

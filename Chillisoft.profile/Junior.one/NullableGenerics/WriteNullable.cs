@@ -5,6 +5,7 @@
         public void write()
         {
             var author = new Author() { Age = 45, Name = "Sandile"};
+            var bob = author;
 
             var autherWriter = new NullableValueWriter<Author>(author);
             autherWriter.DisplayValue();

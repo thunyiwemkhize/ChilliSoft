@@ -2,9 +2,9 @@
 {
     public class StudentRepository
     {
-        private readonly IGenenricRepository<Student> _studentRepo;
+        private readonly IGenericRepository<Student> _studentRepo;
 
-        public StudentRepository(IGenenricRepository<Student> student)
+        public StudentRepository(IGenericRepository<Student> student)
         {
             _studentRepo = student;
         }
@@ -17,7 +17,7 @@
             _studentRepo.Create(entity);
         }
 
-        public List<Student> GetData()
+        public IEnumerable<Student> GetData()
         {
             return _studentRepo.GetData();
         }

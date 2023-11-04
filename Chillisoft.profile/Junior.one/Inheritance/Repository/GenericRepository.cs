@@ -1,16 +1,25 @@
 ﻿namespace Junior.one.Inharitance.Repository
 {
-    public class GenericRepository<T> : IGenenricRepository<T>
+    public class GenericRepository<T> : IGenericRepository<T>
     {
-        private List<T> data = new List<T>();
+        private T[] genericList = new T[0];
 
-        public void Create(T entity)
+        public void Create(T genericEntity)
         {
-            data.Add(entity);
+            T[] newGenericListWithOneExtraSpace = new T[genericList.Length + 1];
+
+            for (int i = 0; i < genericList.Length; i++)
+            {
+                newGenericListWithOneExtraSpace[i] = genericList[i];
+            }
+
+            newGenericListWithOneExtraSpace[genericList.Length] = genericEntity;
+
+            genericList = newGenericListWithOneExtraSpace;
         }
-        public List<T> GetData()
+        public IEnumerable<T> GetData()
         {
-            return data;
+            return genericList;
         }
     }
 }

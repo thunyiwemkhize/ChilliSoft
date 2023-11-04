@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Junior.one.Inharitance.Repository.StaffRepo
 {
     public class StaffRepository
     {
-        private readonly IGenenricRepository<Staff> _staffRepo;
+        private readonly IGenericRepository<Staff> _staffRepo;
 
-        public StaffRepository(IGenenricRepository<Staff> staffRepo) { 
+        public StaffRepository(IGenericRepository<Staff> staffRepo) { 
             _staffRepo = staffRepo;
         }
         public List<Staff> _personList = new();
@@ -22,7 +17,7 @@ namespace Junior.one.Inharitance.Repository.StaffRepo
             _staffRepo.Create(entity);
         }
 
-        public List<Staff> GetData()
+        public IEnumerable<Staff> GetData()
         {
             return _staffRepo.GetData();
         }

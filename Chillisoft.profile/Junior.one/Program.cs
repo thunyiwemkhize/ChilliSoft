@@ -1,5 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using Junior.one;
+
 Console.WriteLine("Hello world");
 int jack = 5;
 DoSomeStuff(jack);
@@ -11,7 +13,7 @@ void DoSomeStuff( int bob)
 }
 
 // Generic repo
-//new TestPerson().testPerson();
+new TestGenericListWithStaff().TestGenericRepoWithStaff();
 
 
 // generic nullables

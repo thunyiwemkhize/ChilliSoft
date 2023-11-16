@@ -3,6 +3,14 @@
     public class GenericRepository<T> : IGenericRepository<T>
     {
         private T[] genericList = new T[0];
+
+        public void Clear()
+        {
+            T[] emptyArray = new T[0];
+            if (genericList.Any())
+                genericList = emptyArray;
+                
+        }
         public void Create(T genericEntity)
         {
             if(genericEntity is null)

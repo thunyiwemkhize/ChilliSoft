@@ -5,6 +5,6 @@
         void Create(T entity);
         IEnumerable<T> GetData();
         void Remove(T entity);
-        //        void Clear();
+        void Clear();
     }
 }

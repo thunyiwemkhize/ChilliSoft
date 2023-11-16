@@ -8,7 +8,6 @@ namespace Junior.one.Inharitance.Repository.StaffRepo
         public StaffRepository(IGenericRepository<Staff> staffRepo) { 
             _staffRepo = staffRepo;
         }
-        public List<Staff> _personList = new();
 
         public void Create(Staff entity)
         {
@@ -24,6 +23,10 @@ namespace Junior.one.Inharitance.Repository.StaffRepo
         public void Remove(Staff entity)
         {
             _staffRepo.Remove(entity);
+        }
+        public void Clear()
+        {
+            _staffRepo.Clear();
         }
     }
 }

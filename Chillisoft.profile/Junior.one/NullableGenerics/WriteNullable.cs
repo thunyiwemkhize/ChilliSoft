@@ -5,10 +5,11 @@
         public void write()
         {
             var author = new Author() { Age = 45, Name = "Sandile"};
-            var bob = author;
+            new NullableValueWriter<Author>(author).DisplayValue();
 
-            var autherWriter = new NullableValueWriter<Author>(author);
-            autherWriter.DisplayValue();
+            var bob = author;
+            bob.Name = "Thunyiwe";
+            new NullableValueWriter<Author>(bob).DisplayValue();
 
             new NullableValueWriter<Author>(null).DisplayValue();
         }

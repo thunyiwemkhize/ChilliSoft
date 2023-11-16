@@ -1,23 +1,25 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using Junior.one;
+using Junior.one.NullableGenerics;
+using Junior.one.ReferenceTypes;
 
 Console.WriteLine("Hello world");
 int jack = 5;
-DoSomeStuff(jack);
+DoSomeStuff(ref jack);
 Console.WriteLine(jack.ToString());
 
-void DoSomeStuff( int bob)
+void DoSomeStuff(ref int bob)
 {
     bob = 45;
 }
 
 // Generic repo
-new TestGenericListWithStaff().TestGenericRepoWithStaff();
+//new TestGenericListWithStaff().TestGenericRepoWithStaff();
 
 
 // generic nullables
-//new NullableWriter().write();
+// new WriteNullable().write();
 
 // statics
 //new DifferenceBetweenStaticAndNonStaticVariableWritter().write();

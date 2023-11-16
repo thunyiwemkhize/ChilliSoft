@@ -35,7 +35,7 @@
         public void Remove(T entity)
         {
            
-            T[] newGenericListWithOneLessSpace = new T[genericList.Length - 1];
+            T[] newGenericArray = new T[genericList.Length - 1];
             int newIndex = 0;
 
             for (int i = 0; i < genericList.Length; i++)
@@ -45,12 +45,11 @@
 
                 if (!genericList[i]!.Equals(entity))
                 {
-                    newGenericListWithOneLessSpace[newIndex] = genericList[i];
+                    newGenericArray[newIndex] = genericList[i];
                     newIndex++;
                 }
             }
-
-            genericList = newGenericListWithOneLessSpace;
+            genericList = newGenericArray;
         }
     }
 }

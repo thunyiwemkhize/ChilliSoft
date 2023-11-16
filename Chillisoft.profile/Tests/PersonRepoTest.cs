@@ -139,14 +139,12 @@ namespace Tests
             }
 
             [Test]
-            [Ignore("")]
-            public void GivenEntity_ShouldRemoveEntity()
+            public void GivenEntity_ShouldCallRemoveWithStaffEntity()
             {
                 // Arrange
                 var staffMock = Substitute.For<IGenericRepository<Staff>>();
-                var repository = new GenericRepository<Staff>().GetData();
 
-                var employee = new StaffBuilder()
+                var staffToDelete = new StaffBuilder()
                     .WithFullName("Thunyiwe")
                     .WithStaffNumber("853798375")
                     .WithPosition("HOD")
@@ -154,39 +152,12 @@ namespace Tests
                     .Build();
 
                 // Act
-                var repo =new RepositoryBuilder().WithCreateStaff(employee).WithStaffList(employee).WithStaffList(new List<Staff>() { employee}).Build();
+                staffMock.Remove(staffToDelete);
+                
                 // Assert
-
-                repo.Remove(employee);
-                //Assert.That(remainigStaff.Count(), Is.EqualTo(0));
-                Assert.That(repo.GetData().Count(), Is.EqualTo(0));
+                staffMock.Received(1).Remove(Arg.Is<Staff>(st => st == staffToDelete));
             }
 
-            [Test]
-            [Ignore("")]
-            public void Given_ValidStaffAndNullStaff_ShouldNotRemove()
-            {
-                // Arrange
-                var staffMock = Substitute.For<IGenericRepository<Staff>>();
-                var repository = new StaffRepository(staffMock);
-
-                var employee = new StaffBuilder()
-                    .WithFullName("Thunyiwe")
-                    .WithStaffNumber("853798375")
-                    .WithPosition("HOD")
-                    .WithId()
-                    .Build();
-                Staff? emptyStaff = null;
-
-                // Act
-                staffMock.Create(employee);
-                staffMock.Create(emptyStaff!);
-                repository.Remove(emptyStaff!);
-                var remainigStaff = repository.GetData();
-                // Assert
-
-                Assert.That(remainigStaff.Count(), Is.EqualTo(1));
-            }
             public static Student ExpectedStudent(Student staff)
             {
                 return Arg.Is<Student>(

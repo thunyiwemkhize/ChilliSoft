@@ -21,5 +21,9 @@ namespace Junior.one.Inharitance.Repository.StaffRepo
         {
             return _staffRepo.GetData();
         }
+        public void Remove(Staff entity)
+        {
+            _staffRepo.Remove(entity);
+        }
     }
 }

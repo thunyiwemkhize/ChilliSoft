@@ -1,6 +1,4 @@
-﻿using Junior.one.Inharitance;
-using Junior.one.Inharitance.Repository;
-using Junior.one.NullableGenerics;
+﻿using Junior.one.Inharitance.Repository;
 using System.Text.Json;
 
 namespace Junior.one
@@ -17,7 +15,7 @@ namespace Junior.one
             var staffName = Console.ReadLine();
             Console.WriteLine("Enter staff number");
             var staffNumber = Console.ReadLine();
-            var staf = new Staff()
+            var staff = new Staff()
             {
                 FullName = staffName!,
                 Position = "position",
@@ -33,13 +31,17 @@ namespace Junior.one
             {
                 Id = Guid.NewGuid(),
                 Course = "ND: IT",
-                FullName = studentName,
+                FullName = studentName!,
                 StudentNumber = studentNumber,
             };
-            repo.Create(staf);
+            repo.Create(staff);
             studentRepo.Create(student);
             Console.WriteLine(JsonSerializer.Serialize(repo.GetData()));
             Console.WriteLine(JsonSerializer.Serialize(studentRepo.GetData()));
+
+            Console.WriteLine("Removing staff");
+            repo.Remove(staff);
+            Console.WriteLine(JsonSerializer.Serialize(repo.GetData()));
         }
     }
 }

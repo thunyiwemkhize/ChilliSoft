@@ -1,11 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using Junior.one;
-using Junior.one.Delegates;
-using Junior.one.NullableGenerics;
-using Junior.one.ReferenceTypes;
-using Junior.one.Statics;
-
 Console.WriteLine("Hello world");
 int jack = 5;
 DoSomeStuff(jack);

@@ -3,7 +3,6 @@
     public class GenericRepository<T> : IGenericRepository<T>
     {
         private T[] genericList = new T[0];
-
         public void Create(T genericEntity)
         {
             if(genericEntity is null)
@@ -24,6 +23,26 @@
         public IEnumerable<T> GetData()
         {
             return genericList;
+        }
+        public void Remove(T entity)
+        {
+           
+            T[] newGenericListWithOneLessSpace = new T[genericList.Length - 1];
+            int newIndex = 0;
+
+            for (int i = 0; i < genericList.Length; i++)
+            {
+                if (genericList[i] == null)
+                    continue;
+
+                if (!genericList[i]!.Equals(entity))
+                {
+                    newGenericListWithOneLessSpace[newIndex] = genericList[i];
+                    newIndex++;
+                }
+            }
+
+            genericList = newGenericListWithOneLessSpace;
         }
     }
 }

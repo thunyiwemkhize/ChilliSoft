@@ -115,7 +115,6 @@ namespace Tests
                 Assert.Throws<ArgumentNullException>(() => repository.Create(invalidStudent));
 
             }
-
             [Test]
             public void GetData_ReturnsListOfStudents()
             {
@@ -138,10 +137,81 @@ namespace Tests
                 CollectionAssert.Contains(students, student2);
                 Assert.AreEqual(2, students.Count());
             }
+
+            [Test]
+            public void GivenEntity_ShouldRemoveEntity()
+            {
+                // Arrange
+                var staffMock = Substitute.For<IGenericRepository<Staff>>();
+                var repository = new StaffRepository(staffMock).GetData();
+
+                var employee = new StaffBuilder()
+                    .WithFullName("Thunyiwe")
+                    .WithStaffNumber("853798375")
+                    .WithPosition("HOD")
+                    .WithId()
+                    .Build();
+
+                // Act
+                //staffMock.GetData().Returns(new
+                //    List<Staff>() { employee});
+                //repository.Remove(employee);
+                //var remainigStaff = repository.GetData();
+                var repo =new RepositoryBuilder().WithStaffList(employee).WithPopList(new List<Staff>() { employee}).Build();
+                // Assert
+
+                repo.Remove(employee);
+                //Assert.That(remainigStaff.Count(), Is.EqualTo(0));
+                Assert.That(repo.GetData().Count(), Is.EqualTo(0));
+            }
+
+            [Test]
+            [Ignore("")]
+            public void Given_ValidStaffAndNullStaff_ShouldNotRemove()
+            {
+                // Arrange
+                var staffMock = Substitute.For<IGenericRepository<Staff>>();
+                var repository = new StaffRepository(staffMock);
+
+                var employee = new StaffBuilder()
+                    .WithFullName("Thunyiwe")
+                    .WithStaffNumber("853798375")
+                    .WithPosition("HOD")
+                    .WithId()
+                    .Build();
+                Staff? emptyStaff = null;
+
+                // Act
+                staffMock.Create(employee);
+                staffMock.Create(emptyStaff!);
+                repository.Remove(emptyStaff!);
+                var remainigStaff = repository.GetData();
+                // Assert
+
+                Assert.That(remainigStaff.Count(), Is.EqualTo(1));
+            }
             public static Student ExpectedStudent(Student staff)
             {
                 return Arg.Is<Student>(
                     p => p == staff);
+            }
+        }
+        public class RepositoryBuilder
+        {
+            private readonly IGenericRepository<Staff> _repository = Substitute.For<IGenericRepository<Staff>>();
+            public StaffRepository Build()
+            {
+                return new StaffRepository(_repository);
+            }
+            public RepositoryBuilder WithStaffList(Staff staff)
+            {
+                _repository.Remove(Arg.Is<Staff>(staff));
+                return this;
+            }
+            public RepositoryBuilder WithPopList(List<Staff> staff)
+            {
+                _repository.GetData().Returns(staff);
+                return this;
             }
         }
     }

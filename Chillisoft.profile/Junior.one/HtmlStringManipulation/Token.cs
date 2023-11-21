@@ -47,11 +47,20 @@ namespace Junior.one.HtmlStringManipulation
                             tagName += inputChars[i].ToString();
                             if (tagName == "div")
                                 token.Name = tagName;
+
                             if (tagName == "span")
                             {
                                 for(int j = 0; j < childrenCount; j++)
                                 {
                                     token.Children.Add(new Token() { Name = "span" } );
+
+                                }
+                            }
+                            if (tagName == "icon")
+                            {
+                                for (int j = 0; j < childrenCount; j++)
+                                {
+                                    token.Children.Add(new Token() { Name = "icon" });
 
                                 }
                             }

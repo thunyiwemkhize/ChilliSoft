@@ -10,6 +10,9 @@ namespace Junior.one.HtmlStringManipulation
     {
         public string? Name { get; set; }
         public IList<Token>? Children { get; set; }
+        public Token() { 
+            Children = new List<Token>();
+        }
 
     }
     public class PopulateTokenWithHtml
@@ -18,6 +21,7 @@ namespace Junior.one.HtmlStringManipulation
         public Token AddHtmToTokenList(string input)
         {
             var shouldWrite = false;
+            var childrenCount = 0;
             var tagName = "";
             var token = new Token();
             if (input.Contains("span"))
@@ -25,12 +29,16 @@ namespace Junior.one.HtmlStringManipulation
                 var inputChars = input.ToArray();
                 for (int i = 0; i < inputChars.Length; i++)
                 {
-                    if (inputChars[i].ToString().Equals("<")) 
+                    if (inputChars[i].ToString().Equals("<"))
+                    {
                         shouldWrite = true;
+                        childrenCount++;
+                    }
                     if (inputChars[i].ToString().Equals("/") || input[i].ToString().Equals(">")) 
                     { 
                         shouldWrite = false; 
-                        tagName = string.Empty; 
+                        tagName = string.Empty;
+                        childrenCount = 0;
                     }
                     if (shouldWrite)
                     {
@@ -40,7 +48,13 @@ namespace Junior.one.HtmlStringManipulation
                             if (tagName == "div")
                                 token.Name = tagName;
                             if (tagName == "span")
-                                token.Children = new List<Token>() { new Token() { Name = "span" } };
+                            {
+                                for(int j = 0; j < childrenCount; j++)
+                                {
+                                    token.Children.Add(new Token() { Name = "span" } );
+
+                                }
+                            }
                         }
 
                     }

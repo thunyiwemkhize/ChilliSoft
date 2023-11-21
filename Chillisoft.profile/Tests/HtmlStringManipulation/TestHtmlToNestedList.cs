@@ -102,5 +102,47 @@ namespace Tests.HtmlStringManipulation
 
             AssertSerializedObject(expected, actaul);
         }
+
+        [Test]
+        public void GivenTwoChildren_ShouldWriteOneParentAndTwoChildren()
+        {
+            var input = "<div><span></span><span></span></div>";
+            var expected = new Token()
+            {
+                Name = "div",
+                Children = new List<Token>() { new Token() { Name = "span" }, new Token() { Name = "span"} }
+            };
+
+            var sut = new PopulateTokenWithHtml();
+
+            var actaul = sut.AddHtmToTokenList(input);
+
+            AssertSerializedObject(expected, actaul);
+        }
+
+        [Test]
+        public void GivenOneParentAndManyChildren_ShouldWriteOneParentAndManyChildren()
+        {
+            var input = "<div><span></span><span></span><span></span><span></span><span></span><span></span></div>";
+            var expected = new Token()
+            {
+                Name = "div",
+                Children = new List<Token>() { 
+                    new Token() { Name = "span" }, 
+                    new Token() { Name = "span" },
+                    new Token() { Name = "span" },
+                    new Token() { Name = "span" },
+                    new Token() { Name = "span" },
+                    new Token() { Name = "span" }
+                }
+            };
+
+            var sut = new PopulateTokenWithHtml();
+
+            var actaul = sut.AddHtmToTokenList(input);
+
+            AssertSerializedObject(expected, actaul);
+        }
+
     }
 }

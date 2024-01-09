@@ -28,7 +28,6 @@ namespace Junior.one.HtmlStringManipulation
                     if (htmlInput[i + 1] == '/')
                     {
                         // Closing tag
-
                         int endIndex = htmlInput.IndexOf('>', i);
                         RemoveTheFirstStackObject(htmlInput, tokenStack, i, endIndex);
                         i = endIndex;
@@ -36,7 +35,6 @@ namespace Junior.one.HtmlStringManipulation
                     else
                     {
                         // Opening tag
-
                         int endIndex = htmlInput.IndexOf('>', i);
                         PopulateTokenStack(htmlInput, tokenStack, i, endIndex);
                         i = endIndex;

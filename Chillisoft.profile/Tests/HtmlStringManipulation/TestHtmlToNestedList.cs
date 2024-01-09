@@ -123,7 +123,15 @@ namespace Tests.HtmlStringManipulation
         [Test]
         public void GivenOneParentAndManyChildren_ShouldWriteOneParentAndManyChildren()
         {
-            var input = "<div><span></span><span></span><span></span><span></span><span></span><span></span></div>";
+            var input = "" +
+                "<div>" +
+                    "<span></span>" +
+                    "<span></span>" +
+                    "<span></span>" +
+                    "<span></span>" +
+                    "<span></span>" +
+                    "<span></span>" +
+                "</div>";
             var expected = new Token()
             {
                 Name = "div",
@@ -185,6 +193,50 @@ namespace Tests.HtmlStringManipulation
             var actaul = sut.AddHtmToTokenList(input);
 
             AssertSerializedObject(expected, actaul);
+        }
+        [Test]
+        public void GivenOneParentOneChildOneGranddChild()
+        {
+            var input = "<div>" +
+                "<parent>" +
+                    "<child>" +
+                        "<grandchild>" +
+                        "</grandchild>" +
+                    "</child>" +
+                "</parent>" +
+                "</div>";
+            var expected = new Token()
+            {
+                Name = "div",
+                Children = new List<Token>() {
+                    new Token()
+                    {
+                        Name = "parent",
+                        Children = new List<Token>()
+                        {
+                            new Token()
+                            {
+                                Name = "child",
+                                Children = new List<Token>
+                                {
+                                    new Token { Name= "grandchild" }
+                                },
+                            },
+                        },
+                     }
+                }
+            };
+
+            var sut = new PopulateTokenWithHtml();
+
+            var actaul = sut.AddHtmToTokenList(input);
+
+            AssertSerializedObject(expected, actaul);
+        }
+
+        public class TestParent
+        {
+
         }
     }
 }

@@ -17,67 +17,49 @@ namespace Junior.one.HtmlStringManipulation
     }
     public class PopulateTokenWithHtml
     {
-        //TODO: detect if div is parent, child or a sibling
-        public Token AddHtmToTokenList(string input)
+        public Token AddHtmToTokenList(string htmlInput)
         {
-            var shouldWrite = false;
-            var childrenCount = 0;
-            var tagName = "";
-            var token = new Token();
-            if (input.Contains("span"))
+            var stack = new Stack<Token>();
+
+            for (int i = 0; i < htmlInput.Length; i++)
             {
-                var inputChars = input.ToArray();
-                for (int i = 0; i < inputChars.Length; i++)
+                if (htmlInput[i] == '<')
                 {
-                    if (inputChars[i].ToString().Equals("<"))
+                    if (htmlInput[i + 1] == '/')
                     {
-                        shouldWrite = true;
-                        childrenCount++;
-                    }
-                    if (inputChars[i].ToString().Equals("/") || input[i].ToString().Equals(">")) 
-                    { 
-                        shouldWrite = false; 
-                        tagName = string.Empty;
-                        childrenCount = 0;
-                    }
-                    if (shouldWrite)
-                    {
-                        if (!inputChars[i].ToString().Equals("<"))
+                        // Closing tag
+                        int endIndex = htmlInput.IndexOf('>', i);
+                        string closingTag = htmlInput.Substring(i + 2, endIndex - i - 2).Trim();
+
+                        if (stack.Count > 1 && stack.Peek().Name == closingTag)
                         {
-                            tagName += inputChars[i].ToString();
-                            if (tagName == "div")
-                            {
-                                token.Name = tagName;
-                                continue;
-                            }
-
-                            if (inputChars[i + 1].ToString().Equals(">"))
-                            {
-                                for (int j = 0; j < childrenCount; j++)
-                                {
-                                    token.Children.Add(new Token() { Name = tagName });
-
-                                }
-                                continue;
-                            }
+                            stack.Pop();
                         }
 
+                        i = endIndex;
+                    }
+                    else
+                    {
+
+                        // Opening tag
+                        int endIndex = htmlInput.IndexOf('>', i);
+                        string openingTag = htmlInput.Substring(i + 1, endIndex - i - 1).Trim();
+
+                        var newElement = new Token { Name = openingTag };
+
+                        if (stack.Count > 0)
+                        {
+                            stack.Peek().Children?.Add(newElement);
+                        }
+
+                        stack.Push(newElement);
+
+                        i = endIndex;
                     }
                 }
-                return token;
             }
-            if (input.Contains("child 2"))
-                return new Token
-                {
-                    Name = "div",
-                    Children = new List<Token>() {
-                        new Token { Name = "div" } ,
-                        new Token { Name = "div" }}
-                };
 
-            if (input != "<div></div>")
-                return new Token { Name = "div", Children = new List<Token>() { new Token { Name = "div" } } };
-            return new Token { Name = "div" };
+            return stack.First();  
         }
 
     } 

@@ -23,7 +23,7 @@ namespace Tests.HtmlStringManipulation
 
             // Act
             var sut = new PopulateTokenWithHtml();
-            var actual = sut.AddHtmToTokenList(input);
+            var actual = sut.PopulateTokenWithHtmlTags(input);
 
             AssertSerializedObject(actual, expected);
         }
@@ -48,7 +48,7 @@ namespace Tests.HtmlStringManipulation
 
             // Act
             var sut = new PopulateTokenWithHtml();
-            var actual = sut.AddHtmToTokenList(input);
+            var actual = sut.PopulateTokenWithHtmlTags(input);
 
             AssertSerializedObject(actual, expected);
         }
@@ -76,7 +76,7 @@ namespace Tests.HtmlStringManipulation
 
             // Act
             var sut = new PopulateTokenWithHtml();
-            var actual = sut.AddHtmToTokenList(input);
+            var actual = sut.PopulateTokenWithHtmlTags(input);
 
             AssertSerializedObject(actual, expected);
         }
@@ -89,7 +89,10 @@ namespace Tests.HtmlStringManipulation
         [Test]
         public void GivenTwoAndCloseTag_ShouldWriteOpenTwoOnly()
         {
-            var input = "<div><span></span></div>";
+            var input = 
+                "<div>" +
+                    "<span></span>" +
+                "</div>";
             var expected = new Token()
             {
                 Name = "div",
@@ -98,7 +101,7 @@ namespace Tests.HtmlStringManipulation
 
             var sut = new PopulateTokenWithHtml();
 
-            var actaul = sut.AddHtmToTokenList(input);
+            var actaul = sut.PopulateTokenWithHtmlTags(input);
 
             AssertSerializedObject(expected, actaul);
         }
@@ -106,7 +109,11 @@ namespace Tests.HtmlStringManipulation
         [Test]
         public void GivenTwoChildren_ShouldWriteOneParentAndTwoChildren()
         {
-            var input = "<div><span></span><span></span></div>";
+            var input = 
+                "<div>" +
+                    "<span></span>" +
+                    "<span></span>" +
+                "</div>";
             var expected = new Token()
             {
                 Name = "div",
@@ -115,7 +122,7 @@ namespace Tests.HtmlStringManipulation
 
             var sut = new PopulateTokenWithHtml();
 
-            var actaul = sut.AddHtmToTokenList(input);
+            var actaul = sut.PopulateTokenWithHtmlTags(input);
 
             AssertSerializedObject(expected, actaul);
         }
@@ -147,7 +154,7 @@ namespace Tests.HtmlStringManipulation
 
             var sut = new PopulateTokenWithHtml();
 
-            var actaul = sut.AddHtmToTokenList(input);
+            var actaul = sut.PopulateTokenWithHtmlTags(input);
 
             AssertSerializedObject(expected, actaul);
         }
@@ -155,7 +162,11 @@ namespace Tests.HtmlStringManipulation
         [Test]
         public void GivenOneParentTwoDifferentChildren_ShouldWriteOneParentAndTwoDifferentChildren()
         {
-            var input = "<div><span></span><icon></icon></div>";
+            var input = 
+                "<div>" +
+                    "<span></span>" +
+                    "<icon></icon>" +
+                "</div>";
             var expected = new Token()
             {
                 Name = "div",
@@ -167,14 +178,22 @@ namespace Tests.HtmlStringManipulation
 
             var sut = new PopulateTokenWithHtml();
 
-            var actaul = sut.AddHtmToTokenList(input);
+            var actaul = sut.PopulateTokenWithHtmlTags(input);
 
             AssertSerializedObject(expected, actaul);
         }
         [Test]
         public void GivenOneParentAndManyDifferentChildren_ShouldWriteOneParentAndManyChildren()
         {
-            var input = "<div><span></span><icon></icon><img></img><text></text><input></input><span></span></div>";
+            var input = 
+                "<div>" +
+                    "<span></span>" +
+                    "<icon></icon>" +
+                    "<img></img>" +
+                    "<text></text>" +
+                    "<input></input>" +
+                    "<span></span>" +
+                "</div>";
             var expected = new Token()
             {
                 Name = "div",
@@ -190,20 +209,21 @@ namespace Tests.HtmlStringManipulation
 
             var sut = new PopulateTokenWithHtml();
 
-            var actaul = sut.AddHtmToTokenList(input);
+            var actaul = sut.PopulateTokenWithHtmlTags(input);
 
             AssertSerializedObject(expected, actaul);
         }
         [Test]
         public void GivenOneParentOneChildOneGranddChild()
         {
-            var input = "<div>" +
-                "<parent>" +
-                    "<child>" +
-                        "<grandchild>" +
-                        "</grandchild>" +
-                    "</child>" +
-                "</parent>" +
+            var input = 
+                "<div>" +
+                    "<parent>" +
+                        "<child>" +
+                            "<grandchild>" +
+                            "</grandchild>" +
+                        "</child>" +
+                    "</parent>" +
                 "</div>";
             var expected = new Token()
             {
@@ -229,14 +249,9 @@ namespace Tests.HtmlStringManipulation
 
             var sut = new PopulateTokenWithHtml();
 
-            var actaul = sut.AddHtmToTokenList(input);
+            var actaul = sut.PopulateTokenWithHtmlTags(input);
 
             AssertSerializedObject(expected, actaul);
-        }
-
-        public class TestParent
-        {
-
         }
     }
 }

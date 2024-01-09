@@ -17,9 +17,9 @@ namespace Junior.one.HtmlStringManipulation
     }
     public class PopulateTokenWithHtml
     {
-        public Token AddHtmToTokenList(string htmlInput)
+        public Token PopulateTokenWithHtmlTags(string htmlInput)
         {
-            var stack = new Stack<Token>();
+            var tokenStack = new Stack<Token>();
 
             for (int i = 0; i < htmlInput.Length; i++)
             {
@@ -28,40 +28,55 @@ namespace Junior.one.HtmlStringManipulation
                     if (htmlInput[i + 1] == '/')
                     {
                         // Closing tag
+
                         int endIndex = htmlInput.IndexOf('>', i);
-                        string closingTag = htmlInput.Substring(i + 2, endIndex - i - 2).Trim();
-
-                        if (stack.Count > 1 && stack.Peek().Name == closingTag)
-                        {
-                            stack.Pop();
-                        }
-
+                        RemoveTheFirstStackObject(htmlInput, tokenStack, i, endIndex);
                         i = endIndex;
                     }
                     else
                     {
-
                         // Opening tag
+
                         int endIndex = htmlInput.IndexOf('>', i);
-                        string openingTag = htmlInput.Substring(i + 1, endIndex - i - 1).Trim();
-
-                        var newElement = new Token { Name = openingTag };
-
-                        if (stack.Count > 0)
-                        {
-                            stack.Peek().Children?.Add(newElement);
-                        }
-
-                        stack.Push(newElement);
-
+                        PopulateTokenStack(htmlInput, tokenStack, i, endIndex);
                         i = endIndex;
                     }
                 }
             }
 
-            return stack.First();  
+            return tokenStack.First();  
         }
 
+        private void PopulateTokenStack(string htmlInput, Stack<Token> tokenStack, int i, int endIndex)
+        {
+            string currentTagName = MakeTagName(htmlInput, i + 1, endIndex - i - 1);
+
+            var newElement = new Token { Name = currentTagName };
+
+            if (tokenStack.Count > 0)
+            {
+                tokenStack.Peek().Children?.Add(newElement);
+            }
+
+            tokenStack.Push(newElement);
+        }
+
+        private void RemoveTheFirstStackObject(string htmlInput, Stack<Token> tokenStack, int i, int endIndex)
+        {
+            string currentTagName = MakeTagName(htmlInput, i + 2, endIndex - i - 2);
+            if (tokenStack.Count > 1 && tokenStack.Peek().Name == currentTagName)
+            {
+                tokenStack.Pop();
+            }
+        }
+
+        private string MakeTagName(string htmlInput, int startIndex, int length)
+        {
+            string tagName = htmlInput.Substring(startIndex, length).Trim();
+            return tagName;
+        }
     } 
+
+   
 }
 

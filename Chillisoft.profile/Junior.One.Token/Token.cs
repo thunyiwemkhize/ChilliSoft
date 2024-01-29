@@ -43,7 +43,7 @@ namespace Junior.One.Token
 
         public Token(string sourceInput, TokenType type)
         {
-            //Type = type;
+            Type = type;
             _sourceInput = sourceInput;
         }
 
@@ -88,7 +88,7 @@ namespace Junior.One.Token
             var input = ReplaceConsecutiveSpaces(HtmlInput());
             List<Token> tokens = new List<Token>
             {
-                new Token("", TokenType.Text) { Content = "", }
+                new Token("", TokenType.DocumentStart) { Content = "", }
             };
             for (int i = 0; i < input.Length; i++)
             {
@@ -103,8 +103,7 @@ namespace Junior.One.Token
                         tagContent = input.Substring(i + 2, endIndex - i - 2);
                         tokens.Add(new Token(input, TokenType.Text)
                         {
-                            Content = tagContent,
-                            Type = TokenType.Text
+                            Content = tagContent
                         });
                         i = endIndex;
                     }
@@ -116,8 +115,7 @@ namespace Junior.One.Token
                         tagContent = input.Substring(i + 1, endIndex - i - 1);
                         tokens.Add(new Token(input, TokenType.Text)
                         {
-                            Content = tagContent,
-                            Type = TokenType.Text
+                            Content = tagContent
                         });
                         i = endIndex;
                     }
@@ -129,7 +127,7 @@ namespace Junior.One.Token
 
                
             }
-            tokens.Add(new Token("", TokenType.EndTag)
+            tokens.Add(new Token("", TokenType.DocumentEnd)
             {
                 Content = "",
             });

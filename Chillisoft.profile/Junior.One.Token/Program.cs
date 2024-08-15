@@ -6,7 +6,7 @@ MakeToken makeToken = new MakeToken();
 // Print tokens for verification
 foreach (var token in makeToken.makeToken())
 {
-    Console.WriteLine($"Type: {token.Type}, Content: '{token.Content}'");
+    Console.WriteLine($"Type: {token.Type}, Content: '{token.Content}', First Character: {token.FirstCharacter}, Last Character: {token.LastCharacter}");
 }
 Console.WriteLine("Hello, World!");
 

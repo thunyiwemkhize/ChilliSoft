@@ -65,12 +65,14 @@ namespace Junior.One.Token
         public string HtmlInput()
         {
             return
-                @"<div>
-              <bob>
-                  <image>
-                  </image>
-              </bob>
-          </div>";
+                @"<div><bob><image></image></bob></div>";
+          //  return
+          //      @"<div>
+          //    <bob>
+          //        <image>
+          //        </image>
+          //    </bob>
+          //</div1>";
             // DocumentStart,StartOpenTag,Text,EndTag,Newline,
             // Whitespace,StartOpenTag,Text,EndTag,NewLine,
             // Whitespace,StartOpenTag,Text,EndTag,NewLine,
@@ -84,57 +86,116 @@ namespace Junior.One.Token
         }
         public List<Token> makeToken()
         {
-            var tagContent = string.Empty;
             var input = ReplaceConsecutiveSpaces(HtmlInput());
             List<Token> tokens = new List<Token>
             {
                 new Token("", TokenType.DocumentStart) { Content = "", }
             };
+            int endIndexToRemember = 0;
             for (int i = 0; i < input.Length; i++)
             {
                 if (input[i] == '\n') { AddToken(input, tokens, i, TokenType.Newline); }
                 else if (input[i] == ' ') { AddToken(input, tokens, i, TokenType.Whitespace); }
                 else if (input[i] == '<')
                 {
+                    string? tagContent;
                     if (input[i + 1] == '/')
                     {
-                        AddToken(input, tokens, i, TokenType.StartCloseTag);
-                           int endIndex = input.IndexOf('>', i);
+                        
+                        int endIndex = input.IndexOf('>', i);
                         tagContent = input.Substring(i + 2, endIndex - i - 2);
                         tokens.Add(new Token(input, TokenType.Text)
                         {
-                            Content = tagContent
+                            Content = tagContent,
+                            FirstCharacter = i,
+                            LastCharacter = endIndex
                         });
                         i = endIndex;
                     }
                     else
                     {
-                        AddToken(input, tokens, i, TokenType.StartOpenTag);
 
                         int endIndex = input.IndexOf('>', i);
+                        
                         tagContent = input.Substring(i + 1, endIndex - i - 1);
                         tokens.Add(new Token(input, TokenType.Text)
-                        {
-                            Content = tagContent
+                        { 
+                            Content = tagContent,
+                            FirstCharacter = i,
+                            LastCharacter = endIndex 
                         });
                         i = endIndex;
+                        var endToken = MakeEndToken(input, input.Length - endIndex);
                     }
                 }
-                else if (input[i] == '>') { 
-                    AddToken(input, tokens, i, TokenType.EndTag);
-                }
-                else { AddToken(input, tokens, i, TokenType.Text); }
-
-               
             }
             tokens.Add(new Token("", TokenType.DocumentEnd)
-            {
+            { 
                 Content = "",
             });
             return tokens;
         }
 
-        private static void AddToken(string input, List<Token> tokens, int i, TokenType tokenType)
+        public List<string> MakeListEndTags(string input,
+            int endIndex)
+        {
+            var token = new List<string>();
+            for (int i = input.Length; i-- > 0;)
+            {
+                if (input[i] == '<')
+                {
+                    if (input[i + 1] == '/')
+                    {
+                        string? tagContent;
+                        endIndex = input.IndexOf('>', i);
+                        tagContent = input.Substring(i + 2, endIndex - i - 2);
+                        token.Add(tagContent);
+                        i = endIndex;
+                    }
+                }
+            }
+            return token;
+        }
+        public Token MakeEndToken(string input,int indexToRemember)
+        {
+            var token = new Token(input, TokenType.EndTag);
+            for (indexToRemember = input.Length; indexToRemember-- > 0;)
+            {
+                if (input[indexToRemember] == '<')
+                {
+                    if (input[indexToRemember + 1] == '/')
+                    {
+                        string? tagContent;
+                        int endIndex = input.IndexOf('>', indexToRemember);
+                        tagContent = input.Substring(indexToRemember + 2, endIndex - indexToRemember - 2);
+                        token.Content = tagContent;
+                        break;
+                    }
+                }
+            }
+            return token;
+        }
+        public Token MakeEndToken(string input)
+        {
+            var token = new Token(input, TokenType.EndTag);
+            for (int i = input.Length; i-- > 0;) 
+            {
+                if (input[i] == '<')
+                {
+                    if (input[i + 1] == '/')
+                    {
+                        string? tagContent;
+                        int endIndex = input.IndexOf('>', i);
+                        tagContent = input.Substring(i + 2, endIndex - i - 2);
+                        token.Content = tagContent;
+                        break;
+                    }
+                }
+            }
+            return token;
+        }
+
+        private void AddToken(string input, List<Token> tokens, int i, TokenType tokenType)
         {
             tokens.Add(new Token(input, TokenType.Text)
             {
